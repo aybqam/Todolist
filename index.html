@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+    body{
+    margin: 0;
+    font-family: Poppins;
+    min-height: 100vh;
+    background: linear-gradient(
+        45deg, #EED6F5, #D3E6F3
+    )
+}
+.container{
+    width: 400px;
+    max-width: 100vw;
+    margin: 30px auto;
+    text-align: center;
+    background-color: #fff5;
+    padding: 20px;
+    border-radius: 20px;
+}
+.form{
+    background-color: #fff;
+    border-radius: inherit;
+    padding: inherit;
+}
+.form h3{
+    text-align: left;
+    margin: 0;
+}
+.form form{
+    display: grid;
+    grid-template-columns: 1fr 60px;
+    gap: 50px;
+}
+.form form textarea{
+    border: none;
+    outline: none;
+    font-family: Poppins;
+    resize: none;
+}
+.form form button{
+    background-color: #0D0112;
+    color: #eee;
+    font-family: Poppins;
+    border-radius: 10px;
+    font-family: small;
+    border: none;
+}
+
+.list{
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+.list li .complete-icon svg{
+    width:20px;
+}
+.list li .close-icon svg{
+    width:10px;
+}
+.list li{
+    background-color: #fff;
+    margin-top: 10px;
+    border-radius: 20px;
+    display: grid;
+    grid-template-columns: 40px 1fr 40px;
+    gap: 30px;
+    text-align: left;
+    padding: 10px;
+}
+.list li .complete-icon,
+.list li .close-icon
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+.list li.complete{
+    opacity: .5;
+}
+.list li.complete .complete-icon svg{
+    color: green;
+}
+    </style>
+</head>
+<body>
+    
+
+    <div class="container">
+        <div class="form">
+            <h3>Create Task</h3>
+            <form>
+                <textarea id="task" placeholder="Write the content of the task here"></textarea>
+                <button id="btnAdd">Create</button>
+            </form>
+        </div>
+        <ul class="list">
+            <li class="complete">
+                <div class="complete-icon">
+                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m7 10 2 2 4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                    </svg>
+                </div>
+                <div class="content">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis, magni.
+                </div>
+                <div class="close-icon">
+                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                    </svg>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+      <script>
+        let btnAdd = document.getElementById('btnAdd');
+        let list = document.querySelector('ul.list');
+        let listTask = [];
+        if(localStorage.getItem('listTask') != null){
+            listTask = JSON.parse(localStorage.getItem('listTask'));
+        }
+
+        function addTaskToHTML(){
+            list.innerHTML = '';
+            listTask.forEach((task, index) => {
+                let newTask = document.createElement('li');
+                newTask.classList.add(task.status);
+                newTask.innerHTML = `
+                <div class="complete-icon" oncLick="completeTask(${index})">
+                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m7 10 2 2 4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                    </svg>
+                </div>
+                <div class="content">
+                    ${task.content}
+                </div>
+                <div class="close-icon" oncLick="deleteTask(${index})">
+                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                    </svg>
+                </div>
+                `;
+                list.appendChild(newTask);
+
+                
+            })
+        }
+        function completeTask(index){
+            listTask[index].status = 'complete';
+            addTaskToHTML();
+            saveLocalStorage();
+        }
+        function deleteTask(index){
+            listTask =  listTask.filter((task, key) =>{return  key != index} );
+            addTaskToHTML();
+            saveLocalStorage();
+        }
+        addTaskToHTML();
+
+        btnAdd.onclick = function(event){
+            event.preventDefault();
+            let content = document.getElementById('task').value;
+            if(content != ''){
+                listTask.unshift({
+                    content: content,
+                    status: 'doing'
+                })
+            }
+            document.getElementById('task').value = '';
+            addTaskToHTML();
+            saveLocalStorage();
+        }
+        function saveLocalStorage(){
+            localStorage.setItem('listTask', JSON.stringify(listTask));
+        }  
+    </script>
+</body>
+</html>
