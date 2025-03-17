@@ -3,209 +3,370 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Online Page</title>
+    <link rel="icon" type="image/svg+xml" href="./assets/list-check-solid.svg" />
+
     <style>
-        body {
+@import url("https://fonts.googleapis.com/css?family=DM+Sans:400,500,700&display=swap");
+:root {
+        --checkbox-color: #ee9ca7;
+        --checkbox-shadow: rgba(238, 156, 167, 0.2);
+        --add-button: #ee9ca7;
+        --add-button-shadow: rgba(238, 156, 167, 0.4);
+    }
+
+        * {
             margin: 0;
-            font-family: Poppins;
-            min-height: 100vh;
-            background: linear-gradient(
-            45deg, #EED6F5, #D3E6F3
-            )
-        }
-        .container {
-            width: 400px;
-            max-width: 100vw;
-            margin: 30px auto;
-            text-align: center;
-            background-color: #fff5;
-            padding: 20px;
-            border-radius: 20px;
-        }
-        .form {
-            background-color: #fff;
-            border-radius: inherit;
-            padding: inherit;
-        }
-        .form h3 {
-            text-align: left;
-            margin: 0;
-        }
-        .form form {
-            display: grid;
-            grid-template-columns: 1fr 60px;
-            gap: 50px;
-        }
-        .form form textarea {
-            border: none;
-            outline: none;
-            font-family: Poppins;
-            resize: none;
-        }
-        .form form button {
-            background-color: #0D0112;
-            color: #eee;
-            font-family: Poppins;
-            border-radius: 10px;
-            font-family: small;
-            border: none;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        .list {
-            padding: 0;
-            margin: 0;
-            list-style: none;
+        ::-webkit-scrollbar {
+            display: none;
         }
-        .list li .complete-icon svg {
-            width: 20px;
+
+        input:focus {
+            outline: none;
         }
-        .list li .close-icon svg {
-            width: 10px;
-        }
-        .list li {
-            background-color: #fff;
-            margin-top: 10px;
-            border-radius: 20px;
-            display: grid;
-            grid-template-columns: 40px 1fr 40px;
-            gap: 30px;
-            text-align: left;
-            padding: 10px;
-        }
-        .list li .complete-icon,
-        .list li .close-icon
-        {
+
+        body {
+            background-image: linear-gradient(
+            62deg,
+            rgba(1, 95, 183, 0.9732216701223994) 13%,
+            rgba(255, 122, 151, 0.5) 4%
+            ),
+            linear-gradient(
+            44deg,
+            rgba(0, 43, 99, 0.07922090238615942) 39%,
+            rgba(242, 140, 143, 0.5) 18%
+            ),
+            linear-gradient(
+            118deg,
+            rgba(84, 202, 242, 0.03152997265339608) 40%,
+            rgba(247, 155, 187, 0.5) 54%
+            ),
+            linear-gradient(
+            58deg,
+            rgba(90, 90, 237, 0.16144443572260592) 83%,
+            rgba(249, 156, 142, 0.5) 23%
+            );
+            background-blend-mode: normal, lighten, multiply, hard-light;
+            font-family: "DM Sans", sans-serif;
+            height: 100vh;
+            width: 100vw;
             display: flex;
             justify-content: center;
             align-items: center;
-            cursor: pointer;
-        }
-        .list li.complete {
-            opacity: .5;
-        }
-        .list li.complete .complete-icon svg {
-            color: green;
         }
 
-
-
-
-        .main {
-            text-align: center;
-            box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-            padding: 30px;
-            border-radius: 10px;
-        }
-
-        .main h1 {
-            font-size: 40px;
-        }
-
-        .url-input {
-            margin: 10px;
-        }
-
-        .url-input input, button {
-            font-size: 17px;
-            padding: 5px;
-            border: none;
-        }
-
-        .url-input input {
-            width: 250px;
-            background-color: transparent;
-            border-bottom: 1px solid;
-            outline: none;
-        }
-
-        .url-input input:focus {
-            border-color: #3aa5e7;
-        }
-
-        .url-input button {
-            border-radius: 5px;
-            cursor: pointer;
-            background-color: #3aa5e7;
-            width: 100px;
-        }
-
-        #container {
-            max-width: 400px;
-        }
-
-        #shortenBtn {
-            margin-top: 10px;
-        }
-
-        #result {
+        /* todo Login Form Styling */
+        #main_div {
+            height: 384px;
+            width: 384px;
+            background-color: #10101d;
+            border-radius: 8px;
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: space-around;
             align-items: center;
-            margin-top: 30px;
+            margin: auto auto;
         }
 
-        #result button {
-            width: 130px;
-            background-color: #3aa5e7;
+        #heading {
+            font-size: 35px;
+            line-height: 36px;
+            color: white;
+        }
+
+        #signup_email,
+        #signup_password,
+        #signin_email,
+        #signin_password {
+            width: 320px;
+            height: 16%;
+            color: #ee9ca7;
+            border-radius: 9999px;
+            padding-left: 8px;
+            font-size: 16px;
+            line-height: 24px;
+            background-color: #191933;
+            border: 2px solid #ee9ca7;
+        }
+
+        #signup_btn,
+        #signin_btn {
+            border: 0px;
+            color: #191933;
+            background-color: #ee9ca7;
+            padding: 5px;
+            font-size: 20px;
+            line-height: 28px;
+            border-radius: 12px;
             cursor: pointer;
-            margin-top: 10px;
-            border-radius: 5px;
         }
 
-        button:hover {
-            background-color: #065485;
-            color: #e2ebf0;
+        #prop {
+            width: 60%;
+            border: 2px solid #ee9ca7;
+            border-radius: 2px;
+        }
+
+        #redirect_signin {
+            font-size: 16px;
+            line-height: 24px;
+            color: white;
+        }
+        #redirect_signin > button {
+            color: #10101d;
+            background-color: #ee9ca7;
+            font-size: 20px;
+            line-height: 28px;
+            margin-left: 5px;
+            padding: 4px;
+            border-radius: 10px;
+            border: 0px;
+            cursor: pointer;
+        }
+
+        /*todo ************************ Todo List Styling *********************/
+        #main_div_todo {
+            height: 90%;
+            width: 480px;
+            margin: auto auto;
+            background-color: #10101d;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-around;
+            flex-direction: column;
+            padding: 24px;
+            overflow: auto;
+        }
+
+        #todo_head {
+            font-size: 35px;
+            line-height: 2px solid #ee9ca7;
+            margin: 0 0 2px solid #ee9ca7 0;
+            color: #fff;
+        }
+
+        #todo_add_div {
+            display: flex;
+        }
+
+        #todo_input {
+            border-right: none;
+            width: 100%;
+            padding: 0 4px;
+            outline: none;
+            border: none;
+            border-bottom: 1px solid #fff;
+            background-color: transparent;
+            margin-right: 2px solid #ee9ca7;
+            color: #fff;
+            box-shadow: none;
+            border-radius: 0;
+            font-size: 16px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        #todo_input::placeholder {
+            color: #fff;
+        }
+
+        #add_todo {
+            width: 47px;
+            height: 44px;
+            border: 2px solid #ee9ca7;
+            background: #191933;
+            color: #fff;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 2px solid #ee9ca7 0 var(--add-button-shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        #add_todo:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        #todos {
+            width: 100%;
+            max-height: 240px;
+            display: flex;
+            flex-direction: column;
+            margin-top: 15px;
+            overflow-y: auto;
+        }
+
+        #todo_ul {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #todo_ul > li {
+            border: 2px solid #ee9ca7;
+            height: 40px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            background-color: #191933;
+            border-radius: 25px;
+            padding: 8px;
+            color: #fff;
+            margin-top: 15px;
+        }
+
+        .mark_as_done {
+            cursor: pointer;
+            height: 16px;
+            width: 15px;
+            border: 2px solid white;
+            border-radius: 50%;
+            background-color: transparent;
+            margin: 0px 10px 0px 5px;
+        }
+        .mark_as_done:hover {
+            border: 0px;
+            background-image: url("./assets/check.svg");
+            background-position: center;
+            background-size: cover;
+        }
+
+        .delete_todo_btn {
+            cursor: pointer;
+            margin: 0px 10px 0px auto;
+            background-color: #191933;
+            border: 0px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .delete_todo_btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        #logout_div {
+            height: 45px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+        }
+        #logout_div > button {
+            margin-top: 15px;
+            border: 2px solid rgb(238, 156, 167);
+            color: white;
+            background-color: #10101d;
+            padding: 6px 6px;
+            font-size: 16px;
+            line-height: 28px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            text-align: center;
+        }
+        #logout_div > button > i {
+            margin-left: 5px;
+        }
+
+        /******************************** Responsive CSS ********************************/
+
+@media screen and (max-width: 600px) {
+            body {
+                height: 90dvh;
+            }
+            /************************    Form Style    **************************8*/
+            #main_div {
+                height: 284px;
+                width: 284px;
+            }
+            #heading {
+                font-size: 25px;
+            }
+            #signup_email,
+            #signup_password,
+            #signin_email,
+            #signin_password {
+                width: 220px;
+                font-size: 12px;
+            }
+            #signup_btn,
+            #signin_btn {
+                padding: 5px;
+                font-size: 16px;
+                line-height: 24px;
+            }
+            #redirect_signin {
+                font-size: 14px;
+                line-height: 20px;
+            }
+            #redirect_signin > button {
+                font-size: 16px;
+                line-height: 24px;
+                padding: 4px;
+            }
+
+            /************************    Todo List Style    ***************************/
+            #main_div_todo {
+                width: 300px;
+            }
         }
     </style>
+    <title>Todo-List</title>
 </head>
 <body>
 
+    <div id="body_div">
 
-    <div class="container">
-        <div class="form">
-            <h3>Create Task</h3>
-            <form>
-                <textarea id="task" placeholder="Write the content of the task here"></textarea>
-                <button id="btnAdd">Create</button>
-            </form>
+        <div id="main_div_todo">
+
+            <h1 id="todo_head">To Do List</h1>
+
+            <div id="todo_add_div">
+                <input type="text" autocomplete="off" placeholder="Add New Task" id="todo_input">
+                <button id="add_todo"><i class="fa-solid fa-plus fa-lg" style="color: #ee9ca7;"></i></button>
+            </div>
+
+            <div id="todos">
+                <ul id="todo_ul">
+                </ul>
+            </div>
+
+            <div id="logout_div">
+                <button id="logout_btn">Logout<i class="fa-solid fa-right-from-bracket"></i></button>
+            </div>
+
         </div>
-        <ul class="list">
-            <li class="complete">
-                <div class="complete-icon">
-                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m7 10 2 2 4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                    </svg>
-                </div>
-                <div class="content">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis, magni.
-                </div>
-                <div class="close-icon">
-                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-                    </svg>
-                </div>
-            </li>
-        </ul>
     </div>
 
+    <script
+        src="https://kit.fontawesome.com/7557684841.js"
+        crossorigin="anonymous"
+        ></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <script type="module">
-        // استيراد Firebase
+    <script defer type="module">
+        //? Import the functions needed from the firebase SDKs
         import {
             initializeApp
-        } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
+        } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
         import {
-            getDatabase,
-            ref,
-            push,
-            set,
-            get,
-            update,
-            remove
-        } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-database.js";
+            getFirestore,
+            collection,
+            addDoc,
+            getDocs,
+            doc,
+            deleteDoc,
+        } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+        import {
+            getAuth,
+            onAuthStateChanged,
+            createUserWithEmailAndPassword,
+            signInWithEmailAndPassword,
+            signOut,
+        } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-        // إعداد Firebase
+
+        //? Firebase configuration
         const firebaseConfig = {
             apiKey: "AIzaSyC1alAx3MpxLCctYvAxqtrlL4AMWfHC6yM",
             authDomain: "todolist-cdf71.firebaseapp.com",
@@ -214,73 +375,306 @@
             storageBucket: "todolist-cdf71.appspot.com",
             messagingSenderId: "453451556819",
             appId: "1:453451556819:web:bdd8ae976ecc01ad8eb126",
-            measurementId: "G-6T0QCFSTR0"
         };
 
-        // تهيئة Firebase
+
+        //? Initialize Firebase
         const app = initializeApp(firebaseConfig);
-        const db = getDatabase(app); // تعريف قاعدة البيانات
+        console.log("App=>", app);
 
-        // انتظر تحميل DOM قبل تشغيل الأكواد
-        document.addEventListener("DOMContentLoaded", function () {
-            let btnAdd = document.getElementById('btnAdd');
-            let list = document.querySelector('ul.list');
 
-            function addTaskToHTML() {
-                get(ref(db, "tasks")).then((snapshot) => {
-                    if (snapshot.exists()) {
-                        list.innerHTML = "";
-                        let tasks = snapshot.val();
-                        Object.keys(tasks).forEach((key) => {
-                            let task = tasks[key];
+        //? Initialize Firebase Authentication
+        const auth = getAuth(app);
+        console.log("auth=>", auth);
 
-                            let newTask = document.createElement("li");
-                            newTask.classList.add(task.status);
-                            newTask.innerHTML = `
-                            <div class="complete-icon" onclick="completeTask('${key}')">✅</div>
-                            <div class="content">${task.content}</div>
-                            <div class="close-icon" onclick="deleteTask('${key}')">❌</div>
-                            `;
-                            list.appendChild(newTask);
-                        });
-                    }
+
+        //? Initialize Cloud Firestore and get a reference to the database service
+        const db = getFirestore(app);
+        const body_div = document.getElementById("body_div");
+
+
+        //? Storing UIs/htmls in variables
+        let signup_html = `<div id="main_div">
+        <p id="heading">SignUp</p>
+        <input type="email" id="signup_email" placeholder="Email" autocomplete="off">
+        <input type="password" id="signup_password" placeholder="Password">
+        <button id="signup_btn">SignUp</button>
+        <p id="prop"></p>
+        <p id="redirect_signin">Already a user?<button id="signin_ui_btn">SignIn</button></p>
+        </div>`;
+        let signin_html = `<p id="heading">SignIn</p>
+        <input type="email" id="signin_email" placeholder="Email" autocomplete="off">
+        <input type="password" id="signin_password" placeholder="Password">
+        <button id="signin_btn">SignIn</button>`;
+        let todo_html = `<div id="main_div_todo">
+
+        <h1 id="todo_head">To Do List</h1>
+
+        <div id="todo_add_div">
+        <input type="text" autocomplete="off" placeholder="Add New Task" id="todo_input">
+        <button id="add_todo"><i class="fa-solid fa-plus fa-lg" style="color: #ee9ca7;"></i></button>
+        </div>
+
+        <div id="todos">
+        <ul id="todo_ul">
+        </ul>
+        </div>
+
+        <div id="logout_div">
+        <button id="logout_btn">Logout<i class="fa-solid fa-right-from-bracket"></i></button>
+        </div>
+
+        </div>`;
+
+
+        //? Access DOM elements when UI changes from todolist UI to signup form UI
+        function access_form_elements(usecase) {
+            //* usecase 1 accesses signup page elements and usecase 2 acesses signin page elements
+            let main_div = document.getElementById("main_div");
+            if (usecase === 1) {
+                const signup_email = document.getElementById("signup_email");
+                const signup_password = document.getElementById("signup_password");
+                const signup_btn = document.getElementById("signup_btn");
+                signup_btn.addEventListener("click", createUserAccount);
+                const signin_ui_btn = document.getElementById("signin_ui_btn");
+                signin_ui_btn.addEventListener("click", signin_ui);
+            } else if (usecase === 2) {
+                const signin_email = document.getElementById("signin_email");
+                const signin_password = document.getElementById("signin_password");
+                const signin_btn = document.getElementById("signin_btn");
+                signin_btn.addEventListener("click", signin);
+            }
+        }
+
+
+        //? Changes UI to signup UI
+        function signup_ui() {
+            body_div.innerHTML = signup_html;
+            access_form_elements(1);
+        }
+        //? Changes UI to signin UI
+        function signin_ui() {
+            main_div.innerHTML = signin_html;
+            access_form_elements(2);
+        }
+
+
+        //? Listener Function, keeps checking if the user is logged in/out
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                console.log("User logged in");
+                //* Calling the function so that todos are automatically shown to the user
+                //* without requiring a page refresh
+                get_todos_from_db();
+
+                //* Call the function to automatically add a default todo if todolist is empty
+                add_default_todo();
+            } else {
+                console.log("User logged out");
+                signup_ui();
+            }
+        });
+
+
+        //? Function to create new user account
+        function createUserAccount() {
+            const auth = getAuth();
+            createUserWithEmailAndPassword(
+                auth,
+                signup_email.value,
+                signup_password.value
+            )
+            .then((userCredential) => {
+                const user = userCredential.user;
+                console.log("User Account Created");
+                body_div.innerHTML = todo_html;
+                add_default_todo();
+                get_todos_from_db();
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                //* Show errror popup
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: `${errorCode.slice(5).toUpperCase()}`,
+                    footer: "Please enter valid credentials",
                 });
+            });
+        }
+
+
+        //? Function to sign user in if user already exists
+        function signin() {
+            signInWithEmailAndPassword(auth,
+                signin_email.value,
+                signin_password.value)
+            .then((userCredential) => {
+                const user = userCredential.user;
+                console.log("User Signed In");
+                body_div.innerHTML = todo_html;
+                add_default_todo();
+                get_todos_from_db();
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                //* Show errror popup
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: `${errorCode.slice(5).toUpperCase()}`,
+                    footer: "Please enter valid credentials",
+                });
+            });
+        }
+
+
+        //? Function to sign user out
+        function log_out() {
+            signOut(auth)
+            .then(() => {
+                console.log("User LogOut Successful");
+            })
+            .catch((error) => {
+                console.log("Error In User SignOut=>", error);
+            });
+        }
+
+        //? ****************************** TodoList Code ******************************
+
+
+        //? Create a new collection in database
+        let todos_collection = collection(db, "todos");
+
+
+        //? Function to add a default todo if the collection is empty
+        async function add_default_todo() {
+            try {
+                const querySnapshot = await getDocs(todos_collection);
+                if (querySnapshot.empty) {
+                    const default_todo = {
+                        todo: "Add Todos",
+                    };
+                    await addDoc(todos_collection, default_todo);
+                    console.log("Default Todo Added Due To Empty TodoList");
+                }
+                get_todos_from_db();
+            } catch (e) {
+                console.log(e);
+                console.log("Failed To Add Default Todo");
+            }
+        }
+
+
+        //? Function to add todos to DB
+        async function add_todo_to_db() {
+            try {
+                const obj = {
+                    todo: todo_input.value.trim(),
+                };
+                if (obj.todo === "") {
+                    Swal.fire({
+                        icon: "error",
+                        text: "Please enter a todo item.",
+                    });
+                    return;
+                }
+
+                const doc_ref = await addDoc(todos_collection, obj);
+                console.log("Todo Added To DB =>");
+                todo_input.value = "";
+                get_todos_from_db();
+            } catch (e) {
+                console.log(e);
+                console.log("Todo Addition Failed");
+            }
+        }
+
+
+        //? Function to retreive/get todos from DB and show them on DOM
+        async function get_todos_from_db() {
+            //* Access todolist DOM elements
+            const todo_input = document.getElementById("todo_input");
+            const todo_add_btn = document.getElementById("add_todo");
+            const logout_btn = document.getElementById("logout_btn");
+            const todo_list = document.getElementById("todo_ul");
+            todo_add_btn.addEventListener("click", add_todo_to_db);
+            logout_btn.addEventListener("click", log_out);
+
+            try {
+                const querySnapshot = await getDocs(todos_collection);
+                console.log("Todos Retrieved From DB");
+
+
+                //* Clear the current list from DOM to avoid duplicates
+                todo_list.innerHTML = "";
+
+                querySnapshot.forEach((doc) => {
+                    const {
+                        todo
+                    } = doc.data();
+                    const todo_string = `<li id="${doc.id}" class="todo_done_btn"><button class="mark_as_done"></button><p id="p_todo">${todo}</p><button class="delete_todo_btn"><i class="fa-solid fa-trash fa-lg" style="color: #df1111;"></i></button></li>`;
+                    //* Add the todo_string to the DOM
+                    todo_list.innerHTML += todo_string;
+                });
+
+                //* Query for the delete buttons after the todos have been added to the DOM
+                let delete_todo_btns = document.querySelectorAll(".delete_todo_btn");
+                //* Add event listeners to the delete buttons
+                delete_todo_btns.forEach((button) => {
+                    button.addEventListener("click", delete_todo);
+                });
+            } catch (e) {
+                console.log(e);
             }
 
-            btnAdd.addEventListener("click",
-                function (event) {
-                    event.preventDefault();
-                    let content = document.getElementById("task").value;
-                    if (content !== "") {
-                        let newTaskRef = push(ref(db, "tasks"));
-                        set(newTaskRef, {
-                            content: content,
-                            status: "doing"
-                        }).then(() => {
-                            document.getElementById("task").value = "";
-                            addTaskToHTML();
-                        });
+            //* Query to access todo paragraph elements and make an array of them to mark
+            //* a specific todo as done.
+            const p_array = document.querySelectorAll("#p_todo");
+            const elements = [];
+            p_array.forEach((ele, i) => {
+                elements[i] = ele;
+            });
+
+            //* Query for the mark todo as_done buttons after the todos have been added to the DOM
+            let mark_as_done_btns = document.querySelectorAll(".mark_as_done");
+            let todo_done = false;
+            //* Add event listeners to the delete buttons
+            mark_as_done_btns.forEach((button, i) => {
+                button.addEventListener("click", () => {
+                    if (todo_done == false) {
+                        button.style.backgroundImage = `url("./assets/check.svg")`;
+                        button.style.backgroundPosition = "center";
+                        button.style.backgroundSize = "cover";
+                        button.style.border = "0px";
+                        elements[i].style.textDecoration = "line-through";
+                        todo_done = true;
+                    } else {
+                        button.style.backgroundImage = "none";
+                        button.style.border = "2px solid white";
+                        elements[i].style.textDecoration = "none";
+                        todo_done = false;
                     }
                 });
+            });
+        }
 
-            window.completeTask = function (taskId) {
-                update(ref(db, "tasks/" + taskId),
-                    {
-                        status: "complete"
-                    }).then(() => {
-                        addTaskToHTML();
-                    });
-            };
 
-            window.deleteTask = function (taskId) {
-                remove(ref(db, "tasks/" + taskId)).then(() => {
-                    addTaskToHTML();
-                });
-            };
-
-            addTaskToHTML();
-        });
+        //? Function to delete todos from DB and also remove them from DOM
+        async function delete_todo(event) {
+            try {
+                //* Retrieve the document ID from the parent li element
+                const doc_id = event.currentTarget.parentElement.id;
+                const doc_ref = doc(db, "todos", doc_id);
+                await deleteDoc(doc_ref);
+                console.log("Todo Deleted From DB");
+                add_default_todo();
+            } catch (e) {
+                console.log(e);
+            }
+        }
     </script>
-
 </body>
 </html>
