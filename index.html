@@ -190,83 +190,96 @@
     </div>
 
 
-<script type="module">
-    // استيراد Firebase
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
-    import { getDatabase, ref, push, set, get, update, remove } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-database.js";
+    <script type="module">
+        // استيراد Firebase
+        import {
+            initializeApp
+        } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
+        import {
+            getDatabase,
+            ref,
+            push,
+            set,
+            get,
+            update,
+            remove
+        } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-database.js";
 
-    // إعداد Firebase
-    const firebaseConfig = {
-        apiKey: "AIzaSyC1alAx3MpxLCctYvAxqtrlL4AMWfHC6yM",
-        authDomain: "todolist-cdf71.firebaseapp.com",
-        databaseURL: "https://todolist-cdf71-default-rtdb.firebaseio.com/",  // أضف رابط قاعدة البيانات
-        projectId: "todolist-cdf71",
-        storageBucket: "todolist-cdf71.appspot.com",
-        messagingSenderId: "453451556819",
-        appId: "1:453451556819:web:bdd8ae976ecc01ad8eb126",
-        measurementId: "G-6T0QCFSTR0"
-    };
+        // إعداد Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyC1alAx3MpxLCctYvAxqtrlL4AMWfHC6yM",
+            authDomain: "todolist-cdf71.firebaseapp.com",
+            projectId: "todolist-cdf71",
+            storageBucket: "todolist-cdf71.appspot.com",
+            messagingSenderId: "453451556819",
+            appId: "1:453451556819:web:bdd8ae976ecc01ad8eb126",
+            measurementId: "G-6T0QCFSTR0"
+        };
 
-    // تهيئة Firebase
-    const app = initializeApp(firebaseConfig);
-    const db = getDatabase(app); // تعريف قاعدة البيانات
+        // تهيئة Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app); // تعريف قاعدة البيانات
 
-    // انتظر تحميل DOM قبل تشغيل الأكواد
-    document.addEventListener("DOMContentLoaded", function () {
-        let btnAdd = document.getElementById('btnAdd');
-        let list = document.querySelector('ul.list');
+        // انتظر تحميل DOM قبل تشغيل الأكواد
+        document.addEventListener("DOMContentLoaded", function () {
+            let btnAdd = document.getElementById('btnAdd');
+            let list = document.querySelector('ul.list');
 
-        function addTaskToHTML() {
-            get(ref(db, "tasks")).then((snapshot) => {
-                if (snapshot.exists()) {
-                    list.innerHTML = "";
-                    let tasks = snapshot.val();
-                    Object.keys(tasks).forEach((key) => {
-                        let task = tasks[key];
+            function addTaskToHTML() {
+                get(ref(db, "tasks")).then((snapshot) => {
+                    if (snapshot.exists()) {
+                        list.innerHTML = "";
+                        let tasks = snapshot.val();
+                        Object.keys(tasks).forEach((key) => {
+                            let task = tasks[key];
 
-                        let newTask = document.createElement("li");
-                        newTask.classList.add(task.status);
-                        newTask.innerHTML = `
+                            let newTask = document.createElement("li");
+                            newTask.classList.add(task.status);
+                            newTask.innerHTML = `
                             <div class="complete-icon" onclick="completeTask('${key}')">✅</div>
                             <div class="content">${task.content}</div>
                             <div class="close-icon" onclick="deleteTask('${key}')">❌</div>
-                        `;
-                        list.appendChild(newTask);
-                    });
-                }
-            });
-        }
-
-        btnAdd.addEventListener("click", function (event) {
-            event.preventDefault();
-            let content = document.getElementById("task").value;
-            if (content !== "") {
-                let newTaskRef = push(ref(db, "tasks"));
-                set(newTaskRef, {
-                    content: content,
-                    status: "doing"
-                }).then(() => {
-                    document.getElementById("task").value = "";
-                    addTaskToHTML();
+                            `;
+                            list.appendChild(newTask);
+                        });
+                    }
                 });
             }
+
+            btnAdd.addEventListener("click",
+                function (event) {
+                    event.preventDefault();
+                    let content = document.getElementById("task").value;
+                    if (content !== "") {
+                        let newTaskRef = push(ref(db, "tasks"));
+                        set(newTaskRef, {
+                            content: content,
+                            status: "doing"
+                        }).then(() => {
+                            document.getElementById("task").value = "";
+                            addTaskToHTML();
+                        });
+                    }
+                });
+
+            window.completeTask = function (taskId) {
+                update(ref(db, "tasks/" + taskId),
+                    {
+                        status: "complete"
+                    }).then(() => {
+                        addTaskToHTML();
+                    });
+            };
+
+            window.deleteTask = function (taskId) {
+                remove(ref(db, "tasks/" + taskId)).then(() => {
+                    addTaskToHTML();
+                });
+            };
+
+            addTaskToHTML();
         });
-
-        window.completeTask = function (taskId) {
-            update(ref(db, "tasks/" + taskId), { status: "complete" }).then(() => {
-                addTaskToHTML();
-            });
-        };
-
-        window.deleteTask = function (taskId) {
-            remove(ref(db, "tasks/" + taskId)).then(() => {
-                addTaskToHTML();
-            });
-        };
-
-        addTaskToHTML();
-    });
-</script>
+    </script>
 
 </body>
 </html>
